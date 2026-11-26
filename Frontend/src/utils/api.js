@@ -33,6 +33,17 @@ export const usersAPI = {
   getProfile: (id) => api.get(`/users/${id}`),
 };
 
+export const doubtsAPI = {
+  getAll: (p) => api.get('/doubts', { params: p }),
+  getById: (id) => api.get(`/doubts/${id}`),
+  create: (d) => api.post('/doubts', d),
+  apply: (id, d) => api.post(`/doubts/${id}/apply`, d),
+  selectHelper: (dId, hId, d) => api.post(`/doubts/${dId}/select/${hId}`, d || {}),
+  cancel: (id) => api.delete(`/doubts/${id}`),
+  myDoubts: () => api.get('/doubts/my/posted'),
+  report: (id, d) => api.post(`/doubts/${id}/report`, d),
+};
+
 export const sessionsAPI = {
   getAll: (p) => api.get('/sessions', { params: p }),
   getById: (id) => api.get(`/sessions/${id}`),
