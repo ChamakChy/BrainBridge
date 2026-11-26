@@ -7,6 +7,7 @@ import { Spinner } from './components/UI';
 // ── Student Pages ─────────────────────────────────────────────────────────────
 import Login       from './pages/Login';
 import Register    from './pages/Register';
+import Sessions    from './pages/Sessions';
 import Profile     from './pages/Profile';
 
 // ── Loading screen ────────────────────────────────────────────────────────────
@@ -35,7 +36,7 @@ function PublicOnly() {
   const { user, loading } = useAuth();
   if (loading) return <LoadingScreen />;
   if (user) {
-    return <Navigate to="/profile" replace />;
+    return <Navigate to="/sessions" replace />;
   }
   return <Outlet />;
 }
@@ -47,9 +48,10 @@ function AppShell() {
       <Navbar onPostDoubt={() => {}} />
       <Layout>
         <Routes>
-          <Route index element={<Navigate to="/profile" replace />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="*"       element={<Navigate to="/profile" replace />} />
+          <Route index element={<Navigate to="/sessions" replace />} />
+          <Route path="sessions" element={<Sessions />} />
+          <Route path="profile"  element={<Profile />} />
+          <Route path="*"        element={<Navigate to="/sessions" replace />} />
         </Routes>
       </Layout>
     </>
@@ -74,7 +76,7 @@ export default function App() {
           </Route>
 
           {/* Default */}
-          <Route path="/" element={<Navigate to="/profile" replace />} />
+          <Route path="/" element={<Navigate to="/sessions" replace />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

@@ -33,4 +33,19 @@ export const usersAPI = {
   getProfile: (id) => api.get(`/users/${id}`),
 };
 
+export const sessionsAPI = {
+  getAll: (p) => api.get('/sessions', { params: p }),
+  getById: (id) => api.get(`/sessions/${id}`),
+  complete: (id) => api.post(`/sessions/${id}/complete`),
+  rate: (id, d) => api.post(`/sessions/${id}/rate`, d),
+  ready: (id) => api.post(`/sessions/${id}/ready`),
+  acceptSchedule: (id) => api.post(`/sessions/${id}/accept-schedule`),
+  declineSchedule: (id) => api.post(`/sessions/${id}/decline-schedule`),
+  upload: (id, file) => {
+    const fd = new FormData();
+    fd.append('file', file);
+    return api.post(`/sessions/${id}/upload`, fd, { headers: { 'Content-Type': 'multipart/form-data' } });
+  },
+};
+
 export default api;
