@@ -13,6 +13,8 @@ import Discover    from './pages/Discover';
 import DoubtDetail from './pages/DoubtDetail';
 import MyDoubts    from './pages/MyDoubts';
 import Sessions    from './pages/Sessions';
+import Leaderboard from './pages/Leaderboard';
+import Wallet      from './pages/Wallet';
 import Profile     from './pages/Profile';
 
 // ── Loading screen ────────────────────────────────────────────────────────────
@@ -66,6 +68,8 @@ function AppShell() {
           <Route path="doubts/:id"  element={<DoubtDetail />} />
           <Route path="my-doubts"   element={<MyDoubts onPostDoubt={() => setPostOpen(true)} />} />
           <Route path="sessions"    element={<Sessions />} />
+          <Route path="leaderboard" element={<Leaderboard />} />
+          <Route path="wallet"      element={<Wallet />} />
           <Route path="profile"     element={<Profile />} />
           <Route path="*"           element={<Navigate to="/discover" replace />} />
         </Routes>

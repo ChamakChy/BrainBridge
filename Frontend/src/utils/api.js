@@ -59,4 +59,9 @@ export const sessionsAPI = {
   },
 };
 
+export const coinsAPI = {
+  balance: () => api.get('/coins/balance'),
+  transactions: (p) => api.get('/coins/transactions', { params: p }),
+};
+
 export default api;
