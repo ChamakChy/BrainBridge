@@ -35,6 +35,7 @@ app.use('/api/users',     require('./routes/users'));
 app.use('/api/doubts',    require('./routes/doubts'));
 const sessionsRouter = require('./routes/sessions');
 app.use('/api/sessions',  sessionsRouter);
+app.use('/api/coins',     require('./routes/coins'));
 
 app.get('/api/health', (req, res) => res.json({ success: true, message: '🧠 BrainBridge API running' }));
 
