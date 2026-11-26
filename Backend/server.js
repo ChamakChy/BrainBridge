@@ -32,6 +32,7 @@ app.use('/api/', limiter);
 app.use('/uploads', express.static(require('path').join(__dirname, 'uploads')));
 app.use('/api/auth',      require('./routes/auth'));
 app.use('/api/users',     require('./routes/users'));
+app.use('/api/doubts',    require('./routes/doubts'));
 const sessionsRouter = require('./routes/sessions');
 app.use('/api/sessions',  sessionsRouter);
 
