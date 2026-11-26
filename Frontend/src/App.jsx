@@ -1,12 +1,17 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Layout from './components/Layout';
-import { Spinner } from './components/UI';
+import PostDoubtModal from './components/PostDoubtModal';
+import { Toast, Spinner } from './components/UI';
 
 // ── Student Pages ─────────────────────────────────────────────────────────────
 import Login       from './pages/Login';
 import Register    from './pages/Register';
+import Discover    from './pages/Discover';
+import DoubtDetail from './pages/DoubtDetail';
+import MyDoubts    from './pages/MyDoubts';
 import Sessions    from './pages/Sessions';
 import Profile     from './pages/Profile';
 
@@ -36,24 +41,46 @@ function PublicOnly() {
   const { user, loading } = useAuth();
   if (loading) return <LoadingScreen />;
   if (user) {
-    return <Navigate to="/sessions" replace />;
+    return <Navigate to="/discover" replace />;
   }
   return <Outlet />;
 }
 
 // ── Main app shell (student view) ─────────────────────────────────────────────
 function AppShell() {
+  const [postOpen, setPostOpen] = useState(false);
+  const [toast, setToast] = useState(null);
+
+  const showToast = (message, type = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 4000);
+  };
+
   return (
     <>
-      <Navbar onPostDoubt={() => {}} />
+      <Navbar onPostDoubt={() => setPostOpen(true)} />
       <Layout>
         <Routes>
-          <Route index element={<Navigate to="/sessions" replace />} />
-          <Route path="sessions" element={<Sessions />} />
-          <Route path="profile"  element={<Profile />} />
-          <Route path="*"        element={<Navigate to="/sessions" replace />} />
+          <Route index element={<Navigate to="/discover" replace />} />
+          <Route path="discover"    element={<Discover />} />
+          <Route path="doubts/:id"  element={<DoubtDetail />} />
+          <Route path="my-doubts"   element={<MyDoubts onPostDoubt={() => setPostOpen(true)} />} />
+          <Route path="sessions"    element={<Sessions />} />
+          <Route path="profile"     element={<Profile />} />
+          <Route path="*"           element={<Navigate to="/discover" replace />} />
         </Routes>
       </Layout>
+
+      {postOpen && (
+        <PostDoubtModal
+          onClose={() => setPostOpen(false)}
+          onSuccess={(doubt) => showToast(`Doubt posted: "${doubt.title.slice(0, 40)}..."`)}
+        />
+      )}
+
+      {toast && (
+        <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />
+      )}
     </>
   );
 }
@@ -76,7 +103,7 @@ export default function App() {
           </Route>
 
           {/* Default */}
-          <Route path="/" element={<Navigate to="/sessions" replace />} />
+          <Route path="/" element={<Navigate to="/discover" replace />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
