@@ -16,6 +16,9 @@ const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 300 });
 app.use('/api/', limiter);
 
 // ── Routes ────────────────────────────────────────────────────────────────────
+app.use('/api/auth',      require('./routes/auth'));
+app.use('/api/users',     require('./routes/users'));
+
 app.get('/api/health', (req, res) => res.json({ success: true, message: '🧠 BrainBridge API running' }));
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/brainbridge')
